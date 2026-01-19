@@ -1,779 +1,199 @@
 <!doctype html>
 <html lang="th" class="h-full">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sweet Princess Dress Up</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&amp;family=Mitr:wght@300;400;500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      box-sizing: border-box;
-    }
-    * {
-      font-family: 'Prompt', 'Mitr', sans-serif;
-    }
-    .sparkle {
-      animation: sparkle 2s ease-in-out infinite;
-    }
+    * { font-family: 'Prompt','Mitr',sans-serif; box-sizing: border-box; }
+
+    .sparkle { animation: sparkle 2s ease-in-out infinite; }
     @keyframes sparkle {
-      0%, 100% { opacity: 0.3; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.2); }
+      0%,100%{opacity:.3;transform:scale(.8)}
+      50%{opacity:1;transform:scale(1.2)}
     }
-    .float {
-      animation: float 3s ease-in-out infinite;
-    }
+
+    .float { animation: float 3s ease-in-out infinite; }
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-10px)}
     }
-    .option-btn {
-      transition: all 0.3s ease;
-    }
-    .option-btn:hover {
-      transform: scale(1.1);
-    }
-    .option-btn.active {
-      ring: 4px;
-      ring-offset: 2px;
-    }
-    .category-tab {
-      transition: all 0.3s ease;
-    }
-    .category-tab:hover {
-      transform: translateY(-2px);
-    }
+
+    .option-btn { transition:.25s; }
+    .option-btn:hover { transform:scale(1.1); }
+
     .princess-container {
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,.15));
     }
   </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full overflow-auto">
-  <div id="app-wrapper" class="min-h-full w-full"><!-- Background Layer -->
-   <div id="game-background" class="fixed inset-0 transition-all duration-500" style="background: linear-gradient(180deg, #fce4ec 0%, #f8bbd9 50%, #f48fb1 100%);"><!-- Floating decorations -->
-    <div class="absolute top-10 left-10 text-4xl sparkle" style="animation-delay: 0s;">
-     ✨
-    </div>
-    <div class="absolute top-20 right-20 text-3xl sparkle" style="animation-delay: 0.5s;">
-     🌸
-    </div>
-    <div class="absolute bottom-40 left-20 text-3xl sparkle" style="animation-delay: 1s;">
-     💖
-    </div>
-    <div class="absolute top-40 right-10 text-2xl sparkle" style="animation-delay: 1.5s;">
-     ⭐
-    </div>
-    <div class="absolute bottom-60 right-30 text-3xl sparkle" style="animation-delay: 0.3s;">
-     🦋
-    </div>
-   </div><!-- Main Content -->
-   <div class="relative z-10 flex flex-col h-full min-h-screen p-4"><!-- Title -->
-    <header class="text-center mb-4">
-     <h1 id="game-title" class="text-3xl md:text-4xl font-bold float" style="color: #ad1457; text-shadow: 2px 2px 4px rgba(255,255,255,0.8);">👑 Sweet Princess Dress Up 👑</h1>
-     <p class="text-sm mt-1" style="color: #c2185b;">สร้างเจ้าหญิงในฝันของคุณ ✨</p>
-    </header><!-- Game Area -->
-    <div class="flex-1 flex flex-col lg:flex-row gap-4 items-center justify-center"><!-- Princess Display -->
-     <div class="princess-container relative w-64 h-80 md:w-72 md:h-96 flex items-center justify-center rounded-3xl p-4" style="background: rgba(255,255,255,0.6); backdrop-filter: blur(10px);"><!-- Princess SVG -->
-      <svg id="princess-svg" viewbox="0 0 200 300" class="w-full h-full"><!-- Hair Back Layer --> <g id="hair-back"></g> <!-- Body/Dress --> <g id="dress-layer"><!-- Default dress -->
-        <path d="M100 120 L60 280 L140 280 Z" fill="#f8bbd9" stroke="#f48fb1" stroke-width="2" />
-        <ellipse cx="100" cy="125" rx="25" ry="15" fill="#f8bbd9" stroke="#f48fb1" stroke-width="2" />
-        <path d="M75 125 Q70 140 65 160" stroke="#f48fb1" stroke-width="2" fill="none" />
-        <path d="M125 125 Q130 140 135 160" stroke="#f48fb1" stroke-width="2" fill="none" /> <!-- Dress decoration -->
-        <circle cx="100" cy="140" r="4" fill="#fff" />
-        <circle cx="100" cy="155" r="3" fill="#fff" />
-        <circle cx="100" cy="168" r="3" fill="#fff" />
-       </g> <!-- Arms --> <ellipse cx="65" cy="145" rx="8" ry="20" fill="#ffe4c9" /> <ellipse cx="135" cy="145" rx="8" ry="20" fill="#ffe4c9" /> <!-- Neck --> <rect x="93" y="95" width="14" height="30" fill="#ffe4c9" rx="5" /> <!-- Face --> <ellipse cx="100" cy="70" rx="35" ry="40" fill="#ffe4c9" /> <!-- Hair Front Layer --> <g id="hair-front"><!-- Default hair -->
-        <path d="M65 55 Q60 30 80 20 Q100 10 120 20 Q140 30 135 55 Q130 40 100 35 Q70 40 65 55" fill="#8d6e63" />
-        <path d="M60 60 Q55 80 60 110 Q65 90 70 70 Q72 55 65 55" fill="#8d6e63" />
-        <path d="M140 60 Q145 80 140 110 Q135 90 130 70 Q128 55 135 55" fill="#8d6e63" />
-       </g> <!-- Eyes --> <ellipse cx="85" cy="65" rx="8" ry="10" fill="#fff" /> <ellipse cx="115" cy="65" rx="8" ry="10" fill="#fff" /> <circle cx="85" cy="67" r="5" fill="#5d4037" /> <circle cx="115" cy="67" r="5" fill="#5d4037" /> <circle cx="86" cy="65" r="2" fill="#fff" /> <circle cx="116" cy="65" r="2" fill="#fff" /> <!-- Eyebrows --> <path d="M77 52 Q85 48 93 52" stroke="#8d6e63" stroke-width="2" fill="none" /> <path d="M107 52 Q115 48 123 52" stroke="#8d6e63" stroke-width="2" fill="none" /> <!-- Blush --> <ellipse cx="72" cy="78" rx="8" ry="5" fill="#ffcdd2" opacity="0.7" /> <ellipse cx="128" cy="78" rx="8" ry="5" fill="#ffcdd2" opacity="0.7" /> <!-- Nose --> <path d="M100 72 L98 80 L102 80" stroke="#e8b4a0" stroke-width="1.5" fill="none" /> <!-- Mouth --> <path d="M92 90 Q100 98 108 90" stroke="#e91e63" stroke-width="2" fill="none" /> <!-- Crown Layer --> <g id="crown-layer"><!-- Default crown -->
-        <path d="M70 25 L75 5 L85 18 L100 0 L115 18 L125 5 L130 25 Z" fill="#ffd54f" stroke="#ffb300" stroke-width="2" />
-        <circle cx="100" cy="12" r="5" fill="#e91e63" />
-        <circle cx="80" cy="18" r="3" fill="#4fc3f7" />
-        <circle cx="120" cy="18" r="3" fill="#4fc3f7" />
-       </g> <!-- Shoes --> <ellipse cx="80" cy="285" rx="15" ry="8" fill="#f8bbd9" stroke="#f48fb1" stroke-width="2" /> <ellipse cx="120" cy="285" rx="15" ry="8" fill="#f8bbd9" stroke="#f48fb1" stroke-width="2" />
-      </svg>
-     </div><!-- Control Panel -->
-     <div class="w-full lg:w-80 rounded-3xl p-4 space-y-3" style="background: rgba(255,255,255,0.85); backdrop-filter: blur(10px);"><!-- Category Tabs -->
-      <div class="flex flex-wrap gap-2 justify-center mb-4"><button onclick="showCategory('dress')" id="tab-dress" class="category-tab px-4 py-2 rounded-full text-sm font-medium" style="background: #f48fb1; color: white;"> <span id="label-dress">👗 ชุดเดรส</span> </button> <button onclick="showCategory('hair')" id="tab-hair" class="category-tab px-4 py-2 rounded-full text-sm font-medium" style="background: #e1bee7; color: #7b1fa2;"> <span id="label-hair">💇 ทรงผม</span> </button> <button onclick="showCategory('crown')" id="tab-crown" class="category-tab px-4 py-2 rounded-full text-sm font-medium" style="background: #e1bee7; color: #7b1fa2;"> <span id="label-crown">👑 มงกุฎ</span> </button> <button onclick="showCategory('bg')" id="tab-bg" class="category-tab px-4 py-2 rounded-full text-sm font-medium" style="background: #e1bee7; color: #7b1fa2;"> <span id="label-bg">🏰 พื้นหลัง</span> </button>
-      </div><!-- Options Container -->
-      <div id="options-container" class="min-h-24"><!-- Dress Options -->
-       <div id="category-dress" class="category-content">
-        <div class="grid grid-cols-4 gap-2"><button onclick="selectDress(0)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl active ring-4 ring-pink-400" style="background: linear-gradient(135deg, #f8bbd9 0%, #f48fb1 100%);">👗</button> <button onclick="selectDress(1)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #b3e5fc 0%, #4fc3f7 100%);">👗</button> <button onclick="selectDress(2)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #c8e6c9 0%, #81c784 100%);">👗</button> <button onclick="selectDress(3)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #fff9c4 0%, #fff176 100%);">👗</button> <button onclick="selectDress(4)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #e1bee7 0%, #ba68c8 100%);">👗</button> <button onclick="selectDress(5)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #ffccbc 0%, #ff8a65 100%);">👗</button>
-        </div>
-       </div><!-- Hair Options -->
-       <div id="category-hair" class="category-content hidden">
-        <div class="grid grid-cols-4 gap-2"><button onclick="selectHair(0)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center active ring-4 ring-pink-400" style="background: #8d6e63;"> <span class="text-white text-xs">บ็อบ</span> </button> <button onclick="selectHair(1)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center" style="background: #5d4037;"> <span class="text-white text-xs">ยาว</span> </button> <button onclick="selectHair(2)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center" style="background: #ffb74d;"> <span class="text-white text-xs">หยิก</span> </button> <button onclick="selectHair(3)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center" style="background: #f48fb1;"> <span class="text-white text-xs">ชมพู</span> </button> <button onclick="selectHair(4)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center" style="background: #4fc3f7;"> <span class="text-white text-xs">ฟ้า</span> </button> <button onclick="selectHair(5)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center" style="background: #ce93d8;"> <span class="text-white text-xs">ม่วง</span> </button>
-        </div>
-       </div><!-- Crown Options -->
-       <div id="category-crown" class="category-content hidden">
-        <div class="grid grid-cols-4 gap-2"><button onclick="selectCrown(0)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl active ring-4 ring-pink-400" style="background: linear-gradient(135deg, #fff9c4 0%, #ffd54f 100%);">👑</button> <button onclick="selectCrown(1)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #e8eaf6 0%, #9fa8da 100%);">👑</button> <button onclick="selectCrown(2)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #fce4ec 0%, #f48fb1 100%);">🎀</button> <button onclick="selectCrown(3)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #e8f5e9 0%, #a5d6a7 100%);">🌸</button> <button onclick="selectCrown(4)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #e3f2fd 0%, #90caf9 100%);">💎</button> <button onclick="selectCrown(5)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #f3e5f5 0%, #ce93d8 100%);">❌</button>
-        </div>
-       </div><!-- Background Options -->
-       <div id="category-bg" class="category-content hidden">
-        <div class="grid grid-cols-4 gap-2"><button onclick="selectBackground(0)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl active ring-4 ring-pink-400" style="background: linear-gradient(180deg, #fce4ec 0%, #f8bbd9 50%, #f48fb1 100%);">🌸</button> <button onclick="selectBackground(1)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(180deg, #e3f2fd 0%, #90caf9 50%, #42a5f5 100%);">🏰</button> <button onclick="selectBackground(2)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(180deg, #f3e5f5 0%, #ce93d8 50%, #ab47bc 100%);">✨</button> <button onclick="selectBackground(3)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%);">🌿</button> <button onclick="selectBackground(4)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(180deg, #fff8e1 0%, #ffe082 50%, #ffb300 100%);">🌅</button> <button onclick="selectBackground(5)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(180deg, #1a237e 0%, #3949ab 50%, #7986cb 100%);">🌙</button>
-        </div>
-       </div>
-      </div><!-- Reset Button --> <button onclick="resetAll()" id="reset-btn" class="w-full py-3 rounded-full font-medium text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #f48fb1 0%, #e91e63 100%);"> 🔄 รีเซ็ต </button> <!-- Meet Prince Button --> <button onclick="meetPrince()" id="meet-prince-btn" class="w-full py-3 rounded-full font-medium text-white transition-all hover:scale-105 mt-2" style="background: linear-gradient(135deg, #4fc3f7 0%, #0288d1 100%);"> 💕 พบเจ้าชาย </button>
-     </div>
-    </div><!-- Footer -->
-    <footer class="text-center mt-4 py-2">
-     <p class="text-xs" style="color: #ad1457;">💖 สร้างเจ้าหญิงสุดน่ารักของคุณ! 💖</p>
-    </footer>
-   </div>
-  </div>
-  <script>
-    // Game State
-    let currentState = {
-      dress: 0,
-      hair: 0,
-      crown: 0,
-      background: 0
-    };
+</head>
 
-    // Data Arrays
-    const dresses = [
-      { main: '#f8bbd9', stroke: '#f48fb1', shoes: '#f8bbd9' },
-      { main: '#4fc3f7', stroke: '#0288d1', shoes: '#4fc3f7' },
-      { main: '#81c784', stroke: '#388e3c', shoes: '#81c784' },
-      { main: '#fff176', stroke: '#fbc02d', shoes: '#fff176' },
-      { main: '#ba68c8', stroke: '#7b1fa2', shoes: '#ba68c8' },
-      { main: '#ff8a65', stroke: '#e64a19', shoes: '#ff8a65' }
-    ];
+<body class="h-full overflow-auto">
 
-    const hairs = [
-      { color: '#8d6e63', type: 'bob' },
-      { color: '#5d4037', type: 'long' },
-      { color: '#ffb74d', type: 'curly' },
-      { color: '#f48fb1', type: 'bob' },
-      { color: '#4fc3f7', type: 'long' },
-      { color: '#ce93d8', type: 'curly' }
-    ];
+<div id="game-background" class="fixed inset-0"
+  style="background:linear-gradient(180deg,#fce4ec,#f8bbd9,#f48fb1)">
+</div>
 
-    const crowns = [
-      { type: 'gold', gem: '#e91e63', side: '#4fc3f7' },
-      { type: 'silver', gem: '#3f51b5', side: '#7c4dff' },
-      { type: 'ribbon', color: '#f48fb1' },
-      { type: 'flower', color: '#f48fb1' },
-      { type: 'tiara', gem: '#4fc3f7' },
-      { type: 'none' }
-    ];
+<div class="relative z-10 min-h-screen p-4 flex flex-col">
 
-    const backgrounds = [
-      'linear-gradient(180deg, #fce4ec 0%, #f8bbd9 50%, #f48fb1 100%)',
-      'linear-gradient(180deg, #e3f2fd 0%, #90caf9 50%, #42a5f5 100%)',
-      'linear-gradient(180deg, #f3e5f5 0%, #ce93d8 50%, #ab47bc 100%)',
-      'linear-gradient(180deg, #e8f5e9 0%, #a5d6a7 50%, #66bb6a 100%)',
-      'linear-gradient(180deg, #fff8e1 0%, #ffe082 50%, #ffb300 100%)',
-      'linear-gradient(180deg, #1a237e 0%, #3949ab 50%, #7986cb 100%)'
-    ];
+<header class="text-center mb-4">
+  <h1 class="text-3xl md:text-4xl font-bold float text-pink-700">
+    👑 Sweet Princess Dress Up 👑
+  </h1>
+  <p class="text-sm text-pink-600">สร้างเจ้าหญิงในฝันของคุณ ✨</p>
+</header>
 
-    // Category switching
-    function showCategory(cat) {
-      document.querySelectorAll('.category-content').forEach(el => el.classList.add('hidden'));
-      document.getElementById('category-' + cat).classList.remove('hidden');
-      
-      document.querySelectorAll('.category-tab').forEach(el => {
-        el.style.background = '#e1bee7';
-        el.style.color = '#7b1fa2';
-      });
-      document.getElementById('tab-' + cat).style.background = '#f48fb1';
-      document.getElementById('tab-' + cat).style.color = 'white';
-    }
+<div class="flex-1 flex flex-col lg:flex-row gap-4 justify-center items-center">
 
-    // Selection functions
-    function selectDress(index) {
-      currentState.dress = index;
-      updateDress();
-      updateOptionButtons('dress', index);
-    }
+<!-- Princess -->
+<div class="princess-container w-64 h-80 md:w-72 md:h-96 bg-white/70 backdrop-blur rounded-3xl p-4 flex items-center justify-center">
+<svg id="princess-svg" viewBox="0 0 200 300" class="w-full h-full">
 
-    function selectHair(index) {
-      currentState.hair = index;
-      updateHair();
-      updateOptionButtons('hair', index);
-    }
+  <g id="hair-back"></g>
 
-    function selectCrown(index) {
-      currentState.crown = index;
-      updateCrown();
-      updateOptionButtons('crown', index);
-    }
+  <g id="dress-layer"></g>
 
-    function selectBackground(index) {
-      currentState.background = index;
-      document.getElementById('game-background').style.background = backgrounds[index];
-      updateOptionButtons('bg', index);
-    }
+  <ellipse cx="65" cy="145" rx="8" ry="20" fill="#ffe4c9"/>
+  <ellipse cx="135" cy="145" rx="8" ry="20" fill="#ffe4c9"/>
 
-    function updateOptionButtons(category, activeIndex) {
-      const container = document.getElementById('category-' + category);
-      const buttons = container.querySelectorAll('.option-btn');
-      buttons.forEach((btn, i) => {
-        btn.classList.remove('active', 'ring-4', 'ring-pink-400');
-        if (i === activeIndex) {
-          btn.classList.add('active', 'ring-4', 'ring-pink-400');
-        }
-      });
-    }
+  <rect x="93" y="95" width="14" height="30" rx="5" fill="#ffe4c9"/>
+  <ellipse cx="100" cy="70" rx="35" ry="40" fill="#ffe4c9"/>
 
-    function updateDress() {
-      const dress = dresses[currentState.dress];
-      const dressLayer = document.getElementById('dress-layer');
-      dressLayer.innerHTML = `
-        <path d="M100 120 L60 280 L140 280 Z" fill="${dress.main}" stroke="${dress.stroke}" stroke-width="2"/>
-        <ellipse cx="100" cy="125" rx="25" ry="15" fill="${dress.main}" stroke="${dress.stroke}" stroke-width="2"/>
-        <path d="M75 125 Q70 140 65 160" stroke="${dress.stroke}" stroke-width="2" fill="none"/>
-        <path d="M125 125 Q130 140 135 160" stroke="${dress.stroke}" stroke-width="2" fill="none"/>
-        <circle cx="100" cy="140" r="4" fill="#fff"/>
-        <circle cx="100" cy="155" r="3" fill="#fff"/>
-        <circle cx="100" cy="168" r="3" fill="#fff"/>
-        <path d="M65 200 Q60 220 70 240 Q80 260 60 280" stroke="${dress.stroke}" stroke-width="2" fill="none"/>
-        <path d="M135 200 Q140 220 130 240 Q120 260 140 280" stroke="${dress.stroke}" stroke-width="2" fill="none"/>
-      `;
-      
-      // Update shoes
-      const svg = document.getElementById('princess-svg');
-      const shoes = svg.querySelectorAll('ellipse[cy="285"]');
-      shoes.forEach(shoe => {
-        shoe.setAttribute('fill', dress.shoes);
-        shoe.setAttribute('stroke', dress.stroke);
-      });
-    }
+  <g id="hair-front"></g>
 
-    function updateHair() {
-      const hair = hairs[currentState.hair];
-      const hairFront = document.getElementById('hair-front');
-      const hairBack = document.getElementById('hair-back');
-      
-      if (hair.type === 'bob') {
-        hairFront.innerHTML = `
-          <path d="M65 55 Q60 30 80 20 Q100 10 120 20 Q140 30 135 55 Q130 40 100 35 Q70 40 65 55" fill="${hair.color}"/>
-          <path d="M60 60 Q55 80 60 110 Q65 90 70 70 Q72 55 65 55" fill="${hair.color}"/>
-          <path d="M140 60 Q145 80 140 110 Q135 90 130 70 Q128 55 135 55" fill="${hair.color}"/>
-        `;
-        hairBack.innerHTML = '';
-      } else if (hair.type === 'long') {
-        hairFront.innerHTML = `
-          <path d="M65 55 Q60 30 80 20 Q100 10 120 20 Q140 30 135 55 Q130 40 100 35 Q70 40 65 55" fill="${hair.color}"/>
-        `;
-        hairBack.innerHTML = `
-          <path d="M55 60 Q45 120 50 180 Q55 240 70 280 Q80 260 75 200 Q70 140 60 80 Z" fill="${hair.color}"/>
-          <path d="M145 60 Q155 120 150 180 Q145 240 130 280 Q120 260 125 200 Q130 140 140 80 Z" fill="${hair.color}"/>
-        `;
-      } else if (hair.type === 'curly') {
-        hairFront.innerHTML = `
-          <path d="M65 55 Q60 30 80 20 Q100 10 120 20 Q140 30 135 55 Q130 40 100 35 Q70 40 65 55" fill="${hair.color}"/>
-          <circle cx="55" cy="70" r="12" fill="${hair.color}"/>
-          <circle cx="50" cy="95" r="10" fill="${hair.color}"/>
-          <circle cx="55" cy="120" r="12" fill="${hair.color}"/>
-          <circle cx="145" cy="70" r="12" fill="${hair.color}"/>
-          <circle cx="150" cy="95" r="10" fill="${hair.color}"/>
-          <circle cx="145" cy="120" r="12" fill="${hair.color}"/>
-        `;
-        hairBack.innerHTML = `
-          <circle cx="45" cy="145" r="10" fill="${hair.color}"/>
-          <circle cx="50" cy="170" r="12" fill="${hair.color}"/>
-          <circle cx="155" cy="145" r="10" fill="${hair.color}"/>
-          <circle cx="150" cy="170" r="12" fill="${hair.color}"/>
-        `;
-      }
-    }
+  <ellipse cx="85" cy="65" rx="8" ry="10" fill="#fff"/>
+  <ellipse cx="115" cy="65" rx="8" ry="10" fill="#fff"/>
+  <circle cx="85" cy="67" r="5" fill="#5d4037"/>
+  <circle cx="115" cy="67" r="5" fill="#5d4037"/>
 
-    function updateCrown() {
-      const crown = crowns[currentState.crown];
-      const crownLayer = document.getElementById('crown-layer');
-      
-      if (crown.type === 'gold' || crown.type === 'silver') {
-        const baseColor = crown.type === 'gold' ? '#ffd54f' : '#b0bec5';
-        const strokeColor = crown.type === 'gold' ? '#ffb300' : '#78909c';
-        crownLayer.innerHTML = `
-          <path d="M70 25 L75 5 L85 18 L100 0 L115 18 L125 5 L130 25 Z" fill="${baseColor}" stroke="${strokeColor}" stroke-width="2"/>
-          <circle cx="100" cy="12" r="5" fill="${crown.gem}"/>
-          <circle cx="80" cy="18" r="3" fill="${crown.side}"/>
-          <circle cx="120" cy="18" r="3" fill="${crown.side}"/>
-        `;
-      } else if (crown.type === 'ribbon') {
-        crownLayer.innerHTML = `
-          <ellipse cx="100" cy="15" rx="20" ry="12" fill="${crown.color}" stroke="#c2185b" stroke-width="1"/>
-          <path d="M80 15 Q70 5 65 20 Q70 25 80 15" fill="${crown.color}" stroke="#c2185b" stroke-width="1"/>
-          <path d="M120 15 Q130 5 135 20 Q130 25 120 15" fill="${crown.color}" stroke="#c2185b" stroke-width="1"/>
-          <circle cx="100" cy="15" r="4" fill="#fff"/>
-        `;
-      } else if (crown.type === 'flower') {
-        crownLayer.innerHTML = `
-          <circle cx="100" cy="12" r="8" fill="${crown.color}"/>
-          <circle cx="92" cy="6" r="6" fill="${crown.color}"/>
-          <circle cx="108" cy="6" r="6" fill="${crown.color}"/>
-          <circle cx="92" cy="18" r="6" fill="${crown.color}"/>
-          <circle cx="108" cy="18" r="6" fill="${crown.color}"/>
-          <circle cx="100" cy="12" r="4" fill="#fff59d"/>
-          <ellipse cx="75" cy="20" rx="6" ry="4" fill="#a5d6a7"/>
-          <ellipse cx="125" cy="20" rx="6" ry="4" fill="#a5d6a7"/>
-        `;
-      } else if (crown.type === 'tiara') {
-        crownLayer.innerHTML = `
-          <path d="M70 25 Q75 15 85 20 Q95 10 100 5 Q105 10 115 20 Q125 15 130 25" stroke="#b0bec5" stroke-width="3" fill="none"/>
-          <circle cx="100" cy="8" r="6" fill="${crown.gem}"/>
-          <circle cx="85" cy="18" r="3" fill="${crown.gem}" opacity="0.7"/>
-          <circle cx="115" cy="18" r="3" fill="${crown.gem}" opacity="0.7"/>
-        `;
-      } else {
-        crownLayer.innerHTML = '';
-      }
-    }
+  <path d="M92 90 Q100 98 108 90" stroke="#e91e63" stroke-width="2" fill="none"/>
 
-    function resetAll() {
-      currentState = { dress: 0, hair: 0, crown: 0, background: 0 };
-      selectDress(0);
-      selectHair(0);
-      selectCrown(0);
-      selectBackground(0);
-      showCategory('dress');
-    }
+  <g id="crown-layer"></g>
 
-    // Meet Prince Feature
-    function meetPrince() {
-      // Create overlay
-      const overlay = document.createElement('div');
-      overlay.id = 'prince-overlay';
-      overlay.className = 'fixed inset-0 z-50 flex items-center justify-center';
-      overlay.style.background = 'rgba(0,0,0,0.7)';
-      overlay.style.animation = 'fadeIn 0.5s ease-in-out';
-      
-      // Create scene container
-      const scene = document.createElement('div');
-      scene.className = 'relative w-11/12 max-w-5xl h-5/6 rounded-3xl p-4 overflow-hidden';
-      scene.style.background = 'linear-gradient(180deg, #4fc3f7 0%, #81d4fa 30%, #e1f5fe 100%)';
-      scene.style.animation = 'slideUp 0.5s ease-out';
-      
-      // Create animated sky decorations
-      const skyDecorations = document.createElement('div');
-      skyDecorations.className = 'absolute inset-0';
-      skyDecorations.innerHTML = `
-        <!-- Rainbow -->
-        <svg class="absolute top-0 left-0 w-full h-full opacity-60" viewBox="0 0 1000 600" preserveAspectRatio="none">
-          <path d="M 0 400 Q 500 100 1000 400" fill="none" stroke="#ff6b6b" stroke-width="40" opacity="0.5"/>
-          <path d="M 0 400 Q 500 120 1000 400" fill="none" stroke="#ffd93d" stroke-width="40" opacity="0.5"/>
-          <path d="M 0 400 Q 500 140 1000 400" fill="none" stroke="#6bcf7f" stroke-width="40" opacity="0.5"/>
-          <path d="M 0 400 Q 500 160 1000 400" fill="none" stroke="#4d96ff" stroke-width="40" opacity="0.5"/>
-          <path d="M 0 400 Q 500 180 1000 400" fill="none" stroke="#9d7ff0" stroke-width="40" opacity="0.5"/>
-        </svg>
-        
-        <!-- Animated Clouds -->
-        <div class="cloud cloud-1">☁️</div>
-        <div class="cloud cloud-2">☁️</div>
-        <div class="cloud cloud-3">☁️</div>
-        
-        <!-- Sparkles -->
-        <div class="sparkle-pop sparkle-1">✨</div>
-        <div class="sparkle-pop sparkle-2">⭐</div>
-        <div class="sparkle-pop sparkle-3">💫</div>
-        <div class="sparkle-pop sparkle-4">💖</div>
-        <div class="sparkle-pop sparkle-5">✨</div>
-        <div class="sparkle-pop sparkle-6">⭐</div>
-      `;
-      
-      // Create title
-      const title = document.createElement('h2');
-      title.className = 'relative z-20 text-center text-2xl md:text-4xl font-bold mb-2 float';
-      title.style.color = '#ad1457';
-      title.style.textShadow = '2px 2px 4px rgba(255,255,255,0.9)';
-      title.textContent = '🦄 การเดินทางแห่งรัก 🦄';
-      
-      // Create main animation container
-      const animationContainer = document.createElement('div');
-      animationContainer.className = 'relative z-10 h-4/5 flex items-center justify-center';
-      
-      // Create unicorn with riders
-      const unicornScene = document.createElement('div');
-      unicornScene.className = 'unicorn-fly';
-      unicornScene.style.width = '500px';
-      unicornScene.style.height = '400px';
-      unicornScene.style.position = 'relative';
-      
-      const unicornSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      unicornSvg.setAttribute('viewBox', '0 0 600 400');
-      unicornSvg.setAttribute('class', 'w-full h-full');
-      
-      // Get current princess state
-      const dress = dresses[currentState.dress];
-      const hair = hairs[currentState.hair];
-      
-      unicornSvg.innerHTML = `
-        <!-- Unicorn Body -->
-        <g class="unicorn-float">
-          <!-- Back legs -->
-          <ellipse cx="320" cy="310" rx="12" ry="35" fill="#fff" transform="rotate(20 320 310)"/>
-          <ellipse cx="350" cy="315" rx="12" ry="30" fill="#fff" transform="rotate(-10 350 315)"/>
-          
-          <!-- Body -->
-          <ellipse cx="320" cy="260" rx="70" ry="50" fill="#fff"/>
-          
-          <!-- Neck -->
-          <ellipse cx="240" cy="230" rx="30" ry="55" fill="#fff" transform="rotate(-20 240 230)"/>
-          
-          <!-- Head -->
-          <ellipse cx="200" cy="180" rx="35" ry="40" fill="#fff"/>
-          
-          <!-- Ears -->
-          <path d="M190 150 Q185 135 195 140" fill="#ffb3d9"/>
-          <path d="M210 150 Q215 135 205 140" fill="#ffb3d9"/>
-          
-          <!-- Horn (Rainbow gradient) -->
-          <defs>
-            <linearGradient id="rainbowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
-              <stop offset="25%" style="stop-color:#ffd93d;stop-opacity:1" />
-              <stop offset="50%" style="stop-color:#6bcf7f;stop-opacity:1" />
-              <stop offset="75%" style="stop-color:#4d96ff;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#9d7ff0;stop-opacity:1" />
-            </linearGradient>
-          </defs>
-          <path d="M200 145 L205 100 L210 145 Z" fill="url(#rainbowGrad)" stroke="#ffd93d" stroke-width="1.5"/>
-          <circle cx="205" cy="100" r="4" fill="#ffd93d"/>
-          
-          <!-- Eye -->
-          <circle cx="190" cy="175" r="6" fill="#5d4037"/>
-          <circle cx="191" cy="173" r="2" fill="#fff"/>
-          
-          <!-- Nose -->
-          <circle cx="175" cy="190" r="4" fill="#ffb3d9"/>
-          
-          <!-- Mouth -->
-          <path d="M175 195 Q180 200 185 195" stroke="#ff6b9d" stroke-width="2" fill="none"/>
-          
-          <!-- Mane (Rainbow) -->
-          <path class="mane-wave" d="M220 160 Q230 140 240 160 Q245 150 250 165" stroke="#ff6b6b" stroke-width="8" fill="none" stroke-linecap="round"/>
-          <path class="mane-wave" d="M225 170 Q235 150 245 170 Q250 160 255 175" stroke="#ffd93d" stroke-width="8" fill="none" stroke-linecap="round" style="animation-delay: 0.1s"/>
-          <path class="mane-wave" d="M230 180 Q240 160 250 180 Q255 170 260 185" stroke="#6bcf7f" stroke-width="8" fill="none" stroke-linecap="round" style="animation-delay: 0.2s"/>
-          <path class="mane-wave" d="M235 190 Q245 170 255 190 Q260 180 265 195" stroke="#4d96ff" stroke-width="8" fill="none" stroke-linecap="round" style="animation-delay: 0.3s"/>
-          
-          <!-- Front legs -->
-          <ellipse cx="260" cy="310" rx="12" ry="35" fill="#fff" transform="rotate(10 260 310)"/>
-          <ellipse cx="285" cy="315" rx="12" ry="30" fill="#fff" transform="rotate(-5 285 315)"/>
-          
-          <!-- Hooves -->
-          <ellipse cx="260" cy="340" rx="10" ry="6" fill="#ffd93d"/>
-          <ellipse cx="285" cy="342" rx="10" ry="6" fill="#ffd93d"/>
-          <ellipse cx="320" cy="340" rx="10" ry="6" fill="#ffd93d"/>
-          <ellipse cx="350" cy="342" rx="10" ry="6" fill="#ffd93d"/>
-          
-          <!-- Tail (Rainbow flowing) -->
-          <path class="tail-wave" d="M390 250 Q420 240 430 260 Q440 280 450 270 Q460 260 470 280" stroke="#ff6b6b" stroke-width="10" fill="none" stroke-linecap="round"/>
-          <path class="tail-wave" d="M390 255 Q420 245 430 265 Q440 285 450 275 Q460 265 470 285" stroke="#ffd93d" stroke-width="10" fill="none" stroke-linecap="round" style="animation-delay: 0.15s"/>
-          <path class="tail-wave" d="M390 260 Q420 250 430 270 Q440 290 450 280 Q460 270 470 290" stroke="#6bcf7f" stroke-width="10" fill="none" stroke-linecap="round" style="animation-delay: 0.3s"/>
-          <path class="tail-wave" d="M390 265 Q420 255 430 275 Q440 295 450 285 Q460 275 470 295" stroke="#4d96ff" stroke-width="10" fill="none" stroke-linecap="round" style="animation-delay: 0.45s"/>
-        </g>
-        
-        <!-- Princess (scaled down and positioned on unicorn) -->
-        <g transform="translate(245, 150) scale(0.45)">
-          ${generatePrincessSVG(dress, hair)}
-        </g>
-        
-        <!-- Prince (scaled down and positioned on unicorn) -->
-        <g transform="translate(310, 155) scale(0.42)">
-          ${generatePrinceSVG()}
-        </g>
-      `;
-      
-      unicornScene.appendChild(unicornSvg);
-      animationContainer.appendChild(unicornScene);
-      
-      // Create message
-      const message = document.createElement('p');
-      message.className = 'relative z-20 text-center text-base md:text-xl font-medium mt-2';
-      message.style.color = '#c2185b';
-      message.style.textShadow = '1px 1px 2px rgba(255,255,255,0.8)';
-      message.textContent = '💕 เจ้าหญิงและเจ้าชายร่วมผจญภัยไปด้วยกัน และมีความสุขตลอดไป 💕';
-      
-      // Create close button
-      const closeBtn = document.createElement('button');
-      closeBtn.className = 'absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold transition-all hover:scale-110 z-30';
-      closeBtn.style.background = 'rgba(255,255,255,0.9)';
-      closeBtn.style.color = '#ad1457';
-      closeBtn.textContent = '✕';
-      closeBtn.onclick = () => {
-        overlay.style.animation = 'fadeOut 0.3s ease-in-out';
-        setTimeout(() => overlay.remove(), 300);
-      };
-      
-      // Assemble scene
-      scene.appendChild(skyDecorations);
-      scene.appendChild(closeBtn);
-      scene.appendChild(title);
-      scene.appendChild(animationContainer);
-      scene.appendChild(message);
-      
-      overlay.appendChild(scene);
-      document.body.appendChild(overlay);
-      
-      // Add animations
-      if (!document.getElementById('unicorn-animations')) {
-        const style = document.createElement('style');
-        style.id = 'unicorn-animations';
-        style.textContent = `
-          @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-          }
-          @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-          }
-          @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-          }
-          @keyframes unicornFly {
-            0% { transform: translateX(-100%) translateY(20%); }
-            100% { transform: translateX(20%) translateY(-5%); }
-          }
-          @keyframes unicornFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-          }
-          @keyframes maneWave {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-          }
-          @keyframes tailWave {
-            0%, 100% { d: path("M390 250 Q420 240 430 260 Q440 280 450 270 Q460 260 470 280"); }
-            50% { d: path("M390 250 Q420 260 430 240 Q440 260 450 250 Q460 280 470 260"); }
-          }
-          @keyframes cloudFloat {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(120vw); }
-          }
-          @keyframes sparkleAppear {
-            0% { opacity: 0; transform: scale(0) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
-            100% { opacity: 0; transform: scale(0.8) rotate(360deg); }
-          }
-          
-          .unicorn-fly {
-            animation: unicornFly 8s ease-in-out infinite;
-          }
-          .unicorn-float {
-            animation: unicornFloat 2.5s ease-in-out infinite;
-          }
-          .mane-wave, .tail-wave {
-            animation: maneWave 1.5s ease-in-out infinite;
-          }
-          .cloud {
-            position: absolute;
-            font-size: 3rem;
-            opacity: 0.7;
-          }
-          .cloud-1 {
-            top: 10%;
-            animation: cloudFloat 25s linear infinite;
-          }
-          .cloud-2 {
-            top: 25%;
-            animation: cloudFloat 30s linear infinite;
-            animation-delay: -5s;
-          }
-          .cloud-3 {
-            top: 15%;
-            animation: cloudFloat 35s linear infinite;
-            animation-delay: -10s;
-          }
-          .sparkle-pop {
-            position: absolute;
-            font-size: 2rem;
-            animation: sparkleAppear 3s ease-in-out infinite;
-          }
-          .sparkle-1 { top: 20%; left: 15%; animation-delay: 0s; }
-          .sparkle-2 { top: 40%; right: 20%; animation-delay: 0.5s; }
-          .sparkle-3 { top: 60%; left: 25%; animation-delay: 1s; }
-          .sparkle-4 { top: 30%; right: 30%; animation-delay: 1.5s; }
-          .sparkle-5 { top: 70%; right: 15%; animation-delay: 2s; }
-          .sparkle-6 { top: 50%; left: 10%; animation-delay: 2.5s; }
-        `;
-        document.head.appendChild(style);
-      }
-    }
-    
-    // Helper function to generate princess SVG based on current state
-    function generatePrincessSVG(dress, hair) {
-      let hairSVG = '';
-      if (hair.type === 'bob') {
-        hairSVG = `
-          <path d="M65 55 Q60 30 80 20 Q100 10 120 20 Q140 30 135 55 Q130 40 100 35 Q70 40 65 55" fill="${hair.color}"/>
-          <path d="M60 60 Q55 80 60 110 Q65 90 70 70 Q72 55 65 55" fill="${hair.color}"/>
-          <path d="M140 60 Q145 80 140 110 Q135 90 130 70 Q128 55 135 55" fill="${hair.color}"/>
-        `;
-      } else if (hair.type === 'long') {
-        hairSVG = `
-          <path d="M65 55 Q60 30 80 20 Q100 10 120 20 Q140 30 135 55 Q130 40 100 35 Q70 40 65 55" fill="${hair.color}"/>
-          <path d="M55 60 Q45 120 50 180 Q55 240 70 280 Q80 260 75 200 Q70 140 60 80 Z" fill="${hair.color}"/>
-          <path d="M145 60 Q155 120 150 180 Q145 240 130 280 Q120 260 125 200 Q130 140 140 80 Z" fill="${hair.color}"/>
-        `;
-      } else {
-        hairSVG = `
-          <path d="M65 55 Q60 30 80 20 Q100 10 120 20 Q140 30 135 55 Q130 40 100 35 Q70 40 65 55" fill="${hair.color}"/>
-          <circle cx="55" cy="70" r="12" fill="${hair.color}"/>
-          <circle cx="50" cy="95" r="10" fill="${hair.color}"/>
-          <circle cx="145" cy="70" r="12" fill="${hair.color}"/>
-          <circle cx="150" cy="95" r="10" fill="${hair.color}"/>
-        `;
-      }
-      
-      const crown = crowns[currentState.crown];
-      let crownSVG = '';
-      if (crown.type === 'gold' || crown.type === 'silver') {
-        const baseColor = crown.type === 'gold' ? '#ffd54f' : '#b0bec5';
-        const strokeColor = crown.type === 'gold' ? '#ffb300' : '#78909c';
-        crownSVG = `
-          <path d="M70 25 L75 5 L85 18 L100 0 L115 18 L125 5 L130 25 Z" fill="${baseColor}" stroke="${strokeColor}" stroke-width="2"/>
-          <circle cx="100" cy="12" r="5" fill="${crown.gem}"/>
-        `;
-      } else if (crown.type === 'ribbon') {
-        crownSVG = `<ellipse cx="100" cy="15" rx="20" ry="12" fill="${crown.color}"/>`;
-      } else if (crown.type === 'flower') {
-        crownSVG = `<circle cx="100" cy="12" r="8" fill="${crown.color}"/>`;
-      } else if (crown.type === 'tiara') {
-        crownSVG = `<path d="M70 25 Q75 15 85 20 Q95 10 100 5 Q105 10 115 20 Q125 15 130 25" stroke="#b0bec5" stroke-width="3" fill="none"/>`;
-      }
-      
-      return `
-        ${hairSVG}
-        <path d="M100 120 L60 240 L140 240 Z" fill="${dress.main}" stroke="${dress.stroke}" stroke-width="2"/>
-        <ellipse cx="100" cy="125" rx="25" ry="15" fill="${dress.main}"/>
-        <ellipse cx="65" cy="145" rx="8" ry="20" fill="#ffe4c9"/>
-        <ellipse cx="135" cy="145" rx="8" ry="20" fill="#ffe4c9"/>
-        <rect x="93" y="95" width="14" height="30" fill="#ffe4c9" rx="5"/>
-        <ellipse cx="100" cy="70" rx="35" ry="40" fill="#ffe4c9"/>
-        <ellipse cx="85" cy="65" rx="8" ry="10" fill="#fff"/>
-        <ellipse cx="115" cy="65" rx="8" ry="10" fill="#fff"/>
-        <circle cx="85" cy="67" r="5" fill="#5d4037"/>
-        <circle cx="115" cy="67" r="5" fill="#5d4037"/>
-        <path d="M92 90 Q100 98 108 90" stroke="#e91e63" stroke-width="2" fill="none"/>
-        ${crownSVG}
-      `;
-    }
-    
-    // Helper function to generate prince SVG
-    function generatePrinceSVG() {
-      return `
-        <rect x="75" y="125" width="50" height="60" fill="#1976d2" rx="5"/>
-        <path d="M85 185 L80 245" stroke="#0d47a1" stroke-width="18" stroke-linecap="round"/>
-        <path d="M115 185 L120 245" stroke="#0d47a1" stroke-width="18" stroke-linecap="round"/>
-        <ellipse cx="65" cy="145" rx="8" ry="20" fill="#ffe4c9"/>
-        <ellipse cx="135" cy="145" rx="8" ry="20" fill="#ffe4c9"/>
-        <rect x="93" y="95" width="14" height="30" fill="#ffe4c9" rx="5"/>
-        <ellipse cx="100" cy="70" rx="35" ry="40" fill="#ffe4c9"/>
-        <path d="M65 50 Q60 25 80 15 Q100 8 120 15 Q140 25 135 50" fill="#5d4037"/>
-        <path d="M75 20 L80 5 L90 15 L100 0 L110 15 L120 5 L125 20 Z" fill="#ffd54f" stroke="#ffb300" stroke-width="2"/>
-        <ellipse cx="85" cy="65" rx="8" ry="10" fill="#fff"/>
-        <ellipse cx="115" cy="65" rx="8" ry="10" fill="#fff"/>
-        <circle cx="85" cy="67" r="5" fill="#5d4037"/>
-        <circle cx="115" cy="67" r="5" fill="#5d4037"/>
-        <path d="M92 90 Q100 98 108 90" stroke="#e91e63" stroke-width="2" fill="none"/>
-      `;
-    }
+  <ellipse cx="80" cy="285" rx="15" ry="8"/>
+  <ellipse cx="120" cy="285" rx="15" ry="8"/>
 
-    // Default config
-    const defaultConfig = {
-      game_title: 'Sweet Princess Dress Up',
-      dress_label: 'ชุดเดรส',
-      hair_label: 'ทรงผม',
-      crown_label: 'มงกุฎ',
-      background_label: 'พื้นหลัง',
-      reset_button: 'รีเซ็ต',
-      meet_prince_button: 'พบเจ้าชาย',
-      primary_color: '#f48fb1',
-      secondary_color: '#e1bee7',
-      text_color: '#ad1457',
-      accent_color: '#e91e63',
-      bg_color: '#fce4ec'
-    };
+</svg>
+</div>
 
-    // Element SDK integration
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: async (config) => {
-          // Update title
-          const title = document.getElementById('game-title');
-          title.textContent = '👑 ' + (config.game_title || defaultConfig.game_title) + ' 👑';
-          
-          // Update labels
-          document.getElementById('label-dress').textContent = '👗 ' + (config.dress_label || defaultConfig.dress_label);
-          document.getElementById('label-hair').textContent = '💇 ' + (config.hair_label || defaultConfig.hair_label);
-          document.getElementById('label-crown').textContent = '👑 ' + (config.crown_label || defaultConfig.crown_label);
-          document.getElementById('label-bg').textContent = '🏰 ' + (config.background_label || defaultConfig.background_label);
-          
-          // Update reset button
-          document.getElementById('reset-btn').textContent = '🔄 ' + (config.reset_button || defaultConfig.reset_button);
-          
-          // Update meet prince button
-          document.getElementById('meet-prince-btn').textContent = '💕 ' + (config.meet_prince_button || defaultConfig.meet_prince_button);
-          
-          // Update colors
-          const primaryColor = config.primary_color || defaultConfig.primary_color;
-          const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
-          const textColor = config.text_color || defaultConfig.text_color;
-          const accentColor = config.accent_color || defaultConfig.accent_color;
-          
-          title.style.color = textColor;
-          document.getElementById('reset-btn').style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${accentColor} 100%)`;
-          
-          // Update active tab
-          const activeTab = document.querySelector('.category-tab[style*="background: rgb(244, 143, 177)"], .category-tab[style*="background: #f48fb1"]');
-          if (activeTab) {
-            activeTab.style.background = primaryColor;
-          }
-          
-          // Update inactive tabs
-          document.querySelectorAll('.category-tab').forEach(tab => {
-            if (!tab.style.background.includes('rgb(244, 143, 177)') && tab.style.background !== primaryColor) {
-              tab.style.background = secondaryColor;
-            }
-          });
-        },
-        mapToCapabilities: (config) => ({
-          recolorables: [
-            {
-              get: () => config.primary_color || defaultConfig.primary_color,
-              set: (value) => { config.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
-            },
-            {
-              get: () => config.secondary_color || defaultConfig.secondary_color,
-              set: (value) => { config.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
-            },
-            {
-              get: () => config.text_color || defaultConfig.text_color,
-              set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
-            },
-            {
-              get: () => config.accent_color || defaultConfig.accent_color,
-              set: (value) => { config.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
-            },
-            {
-              get: () => config.bg_color || defaultConfig.bg_color,
-              set: (value) => { config.bg_color = value; window.elementSdk.setConfig({ bg_color: value }); }
-            }
-          ],
-          borderables: [],
-          fontEditable: undefined,
-          fontSizeable: undefined
-        }),
-        mapToEditPanelValues: (config) => new Map([
-          ['game_title', config.game_title || defaultConfig.game_title],
-          ['dress_label', config.dress_label || defaultConfig.dress_label],
-          ['hair_label', config.hair_label || defaultConfig.hair_label],
-          ['crown_label', config.crown_label || defaultConfig.crown_label],
-          ['background_label', config.background_label || defaultConfig.background_label],
-          ['reset_button', config.reset_button || defaultConfig.reset_button],
-          ['meet_prince_button', config.meet_prince_button || defaultConfig.meet_prince_button]
-        ])
-      });
-    }
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c03c8ff00bda1c3',t:'MTc2ODc5OTAwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<!-- Controls -->
+<div class="w-full lg:w-80 bg-white/80 rounded-3xl p-4 space-y-3">
+
+<div class="flex gap-2 justify-center">
+  <button onclick="showCategory('dress')" class="tab">👗</button>
+  <button onclick="showCategory('hair')" class="tab">💇</button>
+  <button onclick="showCategory('crown')" class="tab">👑</button>
+  <button onclick="showCategory('bg')" class="tab">🏰</button>
+</div>
+
+<div id="category-dress" class="grid grid-cols-4 gap-2">
+  <button onclick="selectDress(0)" class="option-btn w-14 h-14 bg-pink-300 rounded-xl">👗</button>
+  <button onclick="selectDress(1)" class="option-btn w-14 h-14 bg-sky-400 rounded-xl">👗</button>
+  <button onclick="selectDress(2)" class="option-btn w-14 h-14 bg-green-400 rounded-xl">👗</button>
+</div>
+
+<div id="category-hair" class="grid grid-cols-4 gap-2 hidden">
+  <button onclick="selectHair(0)" class="option-btn bg-amber-800 text-white rounded-xl">บ็อบ</button>
+  <button onclick="selectHair(1)" class="option-btn bg-stone-800 text-white rounded-xl">ยาว</button>
+</div>
+
+<div id="category-crown" class="grid grid-cols-4 gap-2 hidden">
+  <button onclick="selectCrown(0)" class="option-btn text-2xl">👑</button>
+  <button onclick="selectCrown(1)" class="option-btn text-2xl">🎀</button>
+  <button onclick="selectCrown(2)" class="option-btn text-2xl">❌</button>
+</div>
+
+<div id="category-bg" class="grid grid-cols-4 gap-2 hidden">
+  <button onclick="selectBackground(0)" class="option-btn">🌸</button>
+  <button onclick="selectBackground(1)" class="option-btn">🌙</button>
+</div>
+
+<button onclick="resetAll()" class="w-full py-2 bg-pink-500 text-white rounded-full">รีเซ็ต</button>
+<button onclick="meetPrince()" class="w-full py-2 bg-sky-500 text-white rounded-full">💕 พบเจ้าชาย</button>
+
+</div>
+</div>
+
+<footer class="text-center text-xs text-pink-700 mt-4">💖 สนุกกับการแต่งเจ้าหญิง 💖</footer>
+</div>
+
+<script>
+const dresses=[
+ {main:'#f8bbd9',stroke:'#f48fb1'},
+ {main:'#4fc3f7',stroke:'#0288d1'},
+ {main:'#81c784',stroke:'#388e3c'}
+];
+const hairs=[
+ {color:'#8d6e63',type:'bob'},
+ {color:'#5d4037',type:'long'}
+];
+const crowns=['gold','ribbon','none'];
+const backgrounds=[
+ 'linear-gradient(180deg,#fce4ec,#f8bbd9,#f48fb1)',
+ 'linear-gradient(180deg,#1a237e,#3949ab,#7986cb)'
+];
+
+let state={dress:0,hair:0,crown:0,bg:0};
+
+function showCategory(c){
+ ['dress','hair','crown','bg'].forEach(id=>{
+  document.getElementById('category-'+id)?.classList.add('hidden');
+ });
+ document.getElementById('category-'+c)?.classList.remove('hidden');
+}
+
+function selectDress(i){state.dress=i;updateDress();}
+function selectHair(i){state.hair=i;updateHair();}
+function selectCrown(i){state.crown=i;updateCrown();}
+function selectBackground(i){
+ state.bg=i;
+ document.getElementById('game-background').style.background=backgrounds[i];
+}
+
+function updateDress(){
+ const d=dresses[state.dress];
+ document.getElementById('dress-layer').innerHTML=`
+  <path d="M100 120 L60 280 L140 280 Z" fill="${d.main}" stroke="${d.stroke}" stroke-width="2"/>
+ `;
+ document.querySelectorAll('ellipse[cy="285"]').forEach(e=>{
+  e.setAttribute('fill',d.main);
+  e.setAttribute('stroke',d.stroke);
+ });
+}
+
+function updateHair(){
+ const h=hairs[state.hair];
+ document.getElementById('hair-front').innerHTML=`
+  <path d="M65 55 Q60 30 80 20 Q100 10 120 20 Q140 30 135 55 Z" fill="${h.color}"/>
+ `;
+ document.getElementById('hair-back').innerHTML='';
+}
+
+function updateCrown(){
+ const c=document.getElementById('crown-layer');
+ if(crowns[state.crown]==='gold'){
+  c.innerHTML='<path d="M70 25 L100 0 L130 25 Z" fill="#ffd54f"/>';
+ }else if(crowns[state.crown]==='ribbon'){
+  c.innerHTML='<ellipse cx="100" cy="15" rx="20" ry="10" fill="#f48fb1"/>';
+ }else c.innerHTML='';
+}
+
+function resetAll(){
+ state={dress:0,hair:0,crown:0,bg:0};
+ updateDress();updateHair();updateCrown();
+ selectBackground(0);showCategory('dress');
+}
+
+function meetPrince(){
+ alert('💖 เจ้าหญิงและเจ้าชายออกเดินทางด้วยยูนิคอร์น 🦄');
+}
+
+resetAll();
+</script>
+
+</body>
 </html>
