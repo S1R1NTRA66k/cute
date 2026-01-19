@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="th" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Princess Dress Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&amp;family=Mitr:wght@300;400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Prompt', 'Mitr', sans-serif;
+    }
+    .sparkle {
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    .float {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .option-btn {
+      transition: all 0.3s ease;
+    }
+    .option-btn:hover {
+      transform: scale(1.1);
+    }
+    .option-btn.active {
+      ring: 4px;
+      ring-offset: 2px;
+    }
+    .category-tab {
+      transition: all 0.3s ease;
+    }
+    .category-tab:hover {
+      transform: translateY(-2px);
+    }
+    .princess-container {
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto">
+  <div id="app-wrapper" class="min-h-full w-full"><!-- Background Layer -->
+   <div id="game-background" class="fixed inset-0 transition-all duration-500" style="background: linear-gradient(180deg, #fce4ec 0%, #f8bbd9 50%, #f48fb1 100%);"><!-- Floating decorations -->
+    <div class="absolute top-10 left-10 text-4xl sparkle" style="animation-delay: 0s;">
+     ✨
+    </div>
+    <div class="absolute top-20 right-20 text-3xl sparkle" style="animation-delay: 0.5s;">
+     🌸
+    </div>
+    <div class="absolute bottom-40 left-20 text-3xl sparkle" style="animation-delay: 1s;">
+     💖
+    </div>
+    <div class="absolute top-40 right-10 text-2xl sparkle" style="animation-delay: 1.5s;">
+     ⭐
+    </div>
+    <div class="absolute bottom-60 right-30 text-3xl sparkle" style="animation-delay: 0.3s;">
+     🦋
+    </div>
+   </div><!-- Main Content -->
+   <div class="relative z-10 flex flex-col h-full min-h-screen p-4"><!-- Title -->
+    <header class="text-center mb-4">
+     <h1 id="game-title" class="text-3xl md:text-4xl font-bold float" style="color: #ad1457; text-shadow: 2px 2px 4px rgba(255,255,255,0.8);">👑 Sweet Princess Dress Up 👑</h1>
+     <p class="text-sm mt-1" style="color: #c2185b;">สร้างเจ้าหญิงในฝันของคุณ ✨</p>
+    </header><!-- Game Area -->
+    <div class="flex-1 flex flex-col lg:flex-row gap-4 items-center justify-center"><!-- Princess Display -->
+     <div class="princess-container relative w-64 h-80 md:w-72 md:h-96 flex items-center justify-center rounded-3xl p-4" style="background: rgba(255,255,255,0.6); backdrop-filter: blur(10px);"><!-- Princess SVG -->
+      <svg id="princess-svg" viewbox="0 0 200 300" class="w-full h-full"><!-- Hair Back Layer --> <g id="hair-back"></g> <!-- Body/Dress --> <g id="dress-layer"><!-- Default dress -->
+        <path d="M100 120 L60 280 L140 280 Z" fill="#f8bbd9" stroke="#f48fb1" stroke-width="2" />
+        <ellipse cx="100" cy="125" rx="25" ry="15" fill="#f8bbd9" stroke="#f48fb1" stroke-width="2" />
+        <path d="M75 125 Q70 140 65 160" stroke="#f48fb1" stroke-width="2" fill="none" />
+        <path d="M125 125 Q130 140 135 160" stroke="#f48fb1" stroke-width="2" fill="none" /> <!-- Dress decoration -->
+        <circle cx="100" cy="140" r="4" fill="#fff" />
+        <circle cx="100" cy="155" r="3" fill="#fff" />
+        <circle cx="100" cy="168" r="3" fill="#fff" />
+       </g> <!-- Arms --> <ellipse cx="65" cy="145" rx="8" ry="20" fill="#ffe4c9" /> <ellipse cx="135" cy="145" rx="8" ry="20" fill="#ffe4c9" /> <!-- Neck --> <rect x="93" y="95" width="14" height="30" fill="#ffe4c9" rx="5" /> <!-- Face --> <ellipse cx="100" cy="70" rx="35" ry="40" fill="#ffe4c9" /> <!-- Hair Front Layer --> <g id="hair-front"><!-- Default hair -->
+        <path d="M65 55 Q60 30 80 20 Q100 10 120 20 Q140 30 135 55 Q130 40 100 35 Q70 40 65 55" fill="#8d6e63" />
+        <path d="M60 60 Q55 80 60 110 Q65 90 70 70 Q72 55 65 55" fill="#8d6e63" />
+        <path d="M140 60 Q145 80 140 110 Q135 90 130 70 Q128 55 135 55" fill="#8d6e63" />
+       </g> <!-- Eyes --> <ellipse cx="85" cy="65" rx="8" ry="10" fill="#fff" /> <ellipse cx="115" cy="65" rx="8" ry="10" fill="#fff" /> <circle cx="85" cy="67" r="5" fill="#5d4037" /> <circle cx="115" cy="67" r="5" fill="#5d4037" /> <circle cx="86" cy="65" r="2" fill="#fff" /> <circle cx="116" cy="65" r="2" fill="#fff" /> <!-- Eyebrows --> <path d="M77 52 Q85 48 93 52" stroke="#8d6e63" stroke-width="2" fill="none" /> <path d="M107 52 Q115 48 123 52" stroke="#8d6e63" stroke-width="2" fill="none" /> <!-- Blush --> <ellipse cx="72" cy="78" rx="8" ry="5" fill="#ffcdd2" opacity="0.7" /> <ellipse cx="128" cy="78" rx="8" ry="5" fill="#ffcdd2" opacity="0.7" /> <!-- Nose --> <path d="M100 72 L98 80 L102 80" stroke="#e8b4a0" stroke-width="1.5" fill="none" /> <!-- Mouth --> <path d="M92 90 Q100 98 108 90" stroke="#e91e63" stroke-width="2" fill="none" /> <!-- Crown Layer --> <g id="crown-layer"><!-- Default crown -->
+        <path d="M70 25 L75 5 L85 18 L100 0 L115 18 L125 5 L130 25 Z" fill="#ffd54f" stroke="#ffb300" stroke-width="2" />
+        <circle cx="100" cy="12" r="5" fill="#e91e63" />
+        <circle cx="80" cy="18" r="3" fill="#4fc3f7" />
+        <circle cx="120" cy="18" r="3" fill="#4fc3f7" />
+       </g> <!-- Shoes --> <ellipse cx="80" cy="285" rx="15" ry="8" fill="#f8bbd9" stroke="#f48fb1" stroke-width="2" /> <ellipse cx="120" cy="285" rx="15" ry="8" fill="#f8bbd9" stroke="#f48fb1" stroke-width="2" />
+      </svg>
+     </div><!-- Control Panel -->
+     <div class="w-full lg:w-80 rounded-3xl p-4 space-y-3" style="background: rgba(255,255,255,0.85); backdrop-filter: blur(10px);"><!-- Category Tabs -->
+      <div class="flex flex-wrap gap-2 justify-center mb-4"><button onclick="showCategory('dress')" id="tab-dress" class="category-tab px-4 py-2 rounded-full text-sm font-medium" style="background: #f48fb1; color: white;"> <span id="label-dress">👗 ชุดเดรส</span> </button> <button onclick="showCategory('hair')" id="tab-hair" class="category-tab px-4 py-2 rounded-full text-sm font-medium" style="background: #e1bee7; color: #7b1fa2;"> <span id="label-hair">💇 ทรงผม</span> </button> <button onclick="showCategory('crown')" id="tab-crown" class="category-tab px-4 py-2 rounded-full text-sm font-medium" style="background: #e1bee7; color: #7b1fa2;"> <span id="label-crown">👑 มงกุฎ</span> </button> <button onclick="showCategory('bg')" id="tab-bg" class="category-tab px-4 py-2 rounded-full text-sm font-medium" style="background: #e1bee7; color: #7b1fa2;"> <span id="label-bg">🏰 พื้นหลัง</span> </button>
+      </div><!-- Options Container -->
+      <div id="options-container" class="min-h-24"><!-- Dress Options -->
+       <div id="category-dress" class="category-content">
+        <div class="grid grid-cols-4 gap-2"><button onclick="selectDress(0)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl active ring-4 ring-pink-400" style="background: linear-gradient(135deg, #f8bbd9 0%, #f48fb1 100%);">👗</button> <button onclick="selectDress(1)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #b3e5fc 0%, #4fc3f7 100%);">👗</button> <button onclick="selectDress(2)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #c8e6c9 0%, #81c784 100%);">👗</button> <button onclick="selectDress(3)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #fff9c4 0%, #fff176 100%);">👗</button> <button onclick="selectDress(4)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #e1bee7 0%, #ba68c8 100%);">👗</button> <button onclick="selectDress(5)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #ffccbc 0%, #ff8a65 100%);">👗</button>
+        </div>
+       </div><!-- Hair Options -->
+       <div id="category-hair" class="category-content hidden">
+        <div class="grid grid-cols-4 gap-2"><button onclick="selectHair(0)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center active ring-4 ring-pink-400" style="background: #8d6e63;"> <span class="text-white text-xs">บ็อบ</span> </button> <button onclick="selectHair(1)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center" style="background: #5d4037;"> <span class="text-white text-xs">ยาว</span> </button> <button onclick="selectHair(2)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center" style="background: #ffb74d;"> <span class="text-white text-xs">หยิก</span> </button> <button onclick="selectHair(3)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center" style="background: #f48fb1;"> <span class="text-white text-xs">ชมพู</span> </button> <button onclick="selectHair(4)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center" style="background: #4fc3f7;"> <span class="text-white text-xs">ฟ้า</span> </button> <button onclick="selectHair(5)" class="option-btn w-14 h-14 rounded-xl flex items-center justify-center" style="background: #ce93d8;"> <span class="text-white text-xs">ม่วง</span> </button>
+        </div>
+       </div><!-- Crown Options -->
+       <div id="category-crown" class="category-content hidden">
+        <div class="grid grid-cols-4 gap-2"><b> </b>
